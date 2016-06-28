@@ -1,0 +1,27 @@
+- Go natively handles the unicode, so it can process the text in all the world's languages.
+- Go is a compiled language
+- Go doesn't require semi-colons at the ends of statements or declarations, except where 2 or more appear on the same line. 
+  The newline charaters are following certain tokens are converted into semicolons, so where new lines are placed matters to proper parsing 
+  of GO code.
+    --> this is the right syntax
+      func someFunction() {
+      }
+    --> this is wrong
+      func someFunction
+      {
+      }
+- Many text editors can be configured to run the 'gofmt' command each time you save a file , this allows us to keep the code always properly 
+  formatted.
+- Like in resharper we can get rid of unused namespaces and add namespaces automatically just by using 'alt+enter', we can do the same for 
+  Go packages using the tool called 'goimports'.
+
+- := symbol, is part of a short variable declaration, a statement that declares one or more variables and gives them appropriate types based 
+  on the initializer values.
+
+- --i or ++i, are not legal in Go, as these expressions can only be postfixed.
+- for loop is the only loop in Go. :O
+  for initialization; condition; post { // the opening brace must be on the same line as the post statement.
+  }
+
+
+  
