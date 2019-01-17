@@ -1,5 +1,5 @@
 package main
-import "worker"
+import "github.com/vishesh/Simply-Go/src/worker"
 
 func main() {
 	worker.SimpleSwitch(2)
