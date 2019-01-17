@@ -1,5 +1,5 @@
 package main
-import "./worker"
+import "worker"
 
 func main() {
 	worker.SimpleSwitch(2)
