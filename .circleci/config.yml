@@ -19,6 +19,10 @@ jobs:
     ####   /go/src/github.com/circleci/go-tool
     ####   /go/src/bitbucket.org/circleci/go-tool
     working_directory: /go/src/github.com/vgvishesh/Simply-Go
+
+    environment:
+      GOPATH: /go
+
     steps:
     - checkout
 
@@ -26,5 +30,5 @@ jobs:
     - run: go get -v -t -d ./...
     - run: go test -v ./...
     - run: go get github.com/mattn/goveralls
-    - run: go test -v -cover -race -coverprofile=/home/ubuntu/coverage.out
-    - run: /home/ubuntu/.go_workspace/bin/goveralls -coverprofile=/home/ubuntu/coverage.out -service=circle-ci -repotoken=$COVERALLS_REPO_TOKEN
+    - run: go test -v -cover -race -coverprofile=/home/ubuntu/coverage.out ./...
+    - run: goveralls -coverprofile=/home/ubuntu/coverage.out -service=circle-ci -repotoken=$COVERALLS_REPO_TOKEN
