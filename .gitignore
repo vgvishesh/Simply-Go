@@ -1,0 +1,6 @@
+.circleci/run-build-locally.sh
+.DS_Store
+.idea/
+coverage.out
+pkg/
+s

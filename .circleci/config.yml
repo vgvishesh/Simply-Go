@@ -4,6 +4,14 @@
 version: 2
 
 jobs:
+  test:
+    pre:
+    - go get github.com/mattn/goveralls
+    override:
+    - go test -v -cover -race -coverprofile=/home/ubuntu/coverage.out ./...
+    post:
+    - /home/ubuntu/.go_workspace/bin/goveralls -coverprofile=/home/ubuntu/coverage.out -service=circle-ci -repotoken=$COVERALLS_REPO_TOKEN
+
   build:
     docker:
     # specify the version
@@ -29,6 +37,15 @@ jobs:
     # specify any bash command here prefixed with `run: `
     - run: go get -v -t -d ./...
     - run: go test -v ./...
-    - run: go get github.com/mattn/goveralls
-    - run: go test -v -cover -race -coverprofile=/home/ubuntu/coverage.out ./...
-    - run: goveralls -coverprofile=/home/ubuntu/coverage.out -service=circle-ci -repotoken=$COVERALLS_REPO_TOKEN
+
+workflows:
+  version: 2
+  build-and-deploy:
+    jobs:
+    - build
+    - test:
+        requires:
+        - build
+        filters:
+          branches:
+            only: master
