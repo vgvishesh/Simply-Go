@@ -19,16 +19,16 @@ jobs:
       post:
         - /home/ubuntu/bin/goveralls -coverprofile=/home/ubuntu/coverage.out -service=circle-ci -repotoken=$COVERALLS_REPO_TOKEN
 
-  build:
-    docker:
-    - image: circleci/golang:1.9
-    working_directory: /go/src/github.com/vgvishesh/Simply-Go
-    environment:
-      GOPATH: /go
-    steps:
-    - checkout
-    - run: go get -v -t -d ./...
-    - run: go test -v ./...
+    build:
+      docker:
+      - image: circleci/golang:1.9
+      working_directory: /go/src/github.com/vgvishesh/Simply-Go
+      environment:
+        GOPATH: /go
+      steps:
+      - checkout
+      - run: go get -v -t -d ./...
+      - run: go test -v ./...
 
 workflows:
   version: 2
