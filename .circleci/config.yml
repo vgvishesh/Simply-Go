@@ -15,6 +15,7 @@ jobs:
     - run: go get github.com/mattn/goveralls
     - run: pwd
     - run: echo $GOPATH
+    - checkout
     - run: go test -v -cover -race -coverprofile=coverage.out ./...
     - run: /home/ubuntu/go/bin/goveralls -coverprofile=/home/ubuntu/coverage.out -service=circle-ci -repotoken=$COVERALLS_REPO_TOKEN
 
