@@ -4,17 +4,20 @@
 version: 2
 
 jobs:
-#  test:
-#    docker:
-#    - image: circleci/golang:1.9
-#    working_directory: /go/src/github.com/vgvishesh/Simply-Go
-#    environment:
-#      GOPATH: /go
-#
-#    steps:
-#    - run: go get github.com/mattn/goveralls
-#    - run: go test -v -cover -race -coverprofile=/home/ubuntu/coverage.out ./...
-#    - run: /home/ubuntu/go/bin/goveralls -coverprofile=/home/ubuntu/coverage.out -service=circle-ci -repotoken=$COVERALLS_REPO_TOKEN
+    test:
+      docker:
+      - image: circleci/golang:1.9
+      working_directory: /go/src/github.com/vgvishesh/Simply-Go
+      environment:
+        GOPATH: /go
+
+      pre:
+        - go get github.com/mattn/goveralls
+        - go get golang.org/x/tools/cmd/cover
+      override:
+        - go test -v -cover -race -coverprofile=/home/ubuntu/coverage.out
+      post:
+        - /home/ubuntu/bin/goveralls -coverprofile=/home/ubuntu/coverage.out -service=circle-ci -repotoken=$COVERALLS_REPO_TOKEN
 
   build:
     docker:
@@ -26,18 +29,15 @@ jobs:
     - checkout
     - run: go get -v -t -d ./...
     - run: go test -v ./...
-    - run: go get github.com/mattn/goveralls
-    - run: go test -v -cover -race -coverprofile=/home/ubuntu/coverage.out ./...
-    - run: /home/ubuntu/go/bin/goveralls -coverprofile=/home/ubuntu/coverage.out -service=circle-ci -repotoken=$COVERALLS_REPO_TOKEN
 
 workflows:
   version: 2
   build-and-test:
     jobs:
     - build
-#    - test:
-#        requires:
-#        - build
-#        filters:
-#          branches:
-#            only: master
+    - test:
+        requires:
+        - build
+        filters:
+          branches:
+            only: master
