@@ -18,6 +18,7 @@ jobs:
     - checkout
     - run: go test -v -cover -race -coverprofile=coverage.out ./...
     - run: /go/bin/goveralls -coverprofile=coverage.out -service=circle-ci -repotoken=$COVERALLS_REPO_TOKEN
+    - run: bash <(curl -s https://codecov.io/bash)
 
   build:
     docker:
