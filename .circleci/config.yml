@@ -4,35 +4,32 @@
 version: 2
 
 jobs:
-    test:
-      docker:
-      - image: circleci/golang:1.9
-      working_directory: /go/src/github.com/vgvishesh/Simply-Go
-      environment:
-        GOPATH: /go
+  test:
+    docker:
+    - image: circleci/golang:1.9
+    working_directory: /go/src/github.com/vgvishesh/Simply-Go
+    environment:
+      GOPATH: /go
 
-      pre:
-        - go get github.com/mattn/goveralls
-        - go get golang.org/x/tools/cmd/cover
-      override:
-        - go test -v -cover -race -coverprofile=/home/ubuntu/coverage.out
-      post:
-        - /home/ubuntu/bin/goveralls -coverprofile=/home/ubuntu/coverage.out -service=circle-ci -repotoken=$COVERALLS_REPO_TOKEN
+    steps:
+    - run: go get github.com/mattn/goveralls
+    - run: go test -v -cover -race -coverprofile=/home/ubuntu/coverage.out ./...
+    - run: /home/ubuntu/go/bin/goveralls -coverprofile=/home/ubuntu/coverage.out -service=circle-ci -repotoken=$COVERALLS_REPO_TOKEN
 
-    build:
-      docker:
-      - image: circleci/golang:1.9
-      working_directory: /go/src/github.com/vgvishesh/Simply-Go
-      environment:
-        GOPATH: /go
-      steps:
-      - checkout
-      - run: go get -v -t -d ./...
-      - run: go test -v ./...
+  build:
+    docker:
+    - image: circleci/golang:1.9
+    working_directory: /go/src/github.com/vgvishesh/Simply-Go
+    environment:
+      GOPATH: /go
+    steps:
+    - checkout
+    - run: go get -v -t -d ./...
+    - run: go test -v ./...
 
 workflows:
   version: 2
-  build-and-test:
+  build-and-deploy:
     jobs:
     - build
     - test:
