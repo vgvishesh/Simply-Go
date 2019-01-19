@@ -6,7 +6,7 @@ version: 2
 jobs:
   test:
     docker:
-    - image: circleci/golang:1.9
+    - image: circleci/golang:1.11.2
     working_directory: /go/src/github.com/vgvishesh/Simply-Go
     environment:
       GOPATH: /go
@@ -19,7 +19,7 @@ jobs:
 
   build:
     docker:
-    - image: circleci/golang:1.9
+    - image: circleci/golang:1.11.2
     working_directory: /go/src/github.com/vgvishesh/Simply-Go
     environment:
       GOPATH: /go
